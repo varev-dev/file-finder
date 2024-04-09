@@ -30,8 +30,9 @@ function find_files() {
     [[ -n "${VALUES[2]}" ]] && min="-size +${VALUES[2]}c" || min=""
     [[ -n "${VALUES[3]}" ]] && max="-size -${VALUES[3]}c" || max=""
     [[ -n "${VALUES[4]}" ]] && perms="-perm ${VALUES[4]}" || perms=""
+    [[ -n "${max}" && -n "${min}" ]] && max=" -a $max"
 
-    output=$(find "${directory}" -maxdepth 6 -type f ${filename} ${min} ${max} ${perms})
+    output=`find "${directory}" -maxdepth 6 -type f ${filename} ${perms} ${min} ${max}`
     if [[ -n "${VALUES[5]}" ]]; then
         output=$(echo "$output" | xargs grep -l "${VALUES[5]}")
     fi
